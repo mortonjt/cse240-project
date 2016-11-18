@@ -11,16 +11,16 @@
 /*
 Budget sizes
 
-8K   + 64  -> k=6,  s=4
-16K  + 128 -> k=7,  s=4
-32K  + 256 -> k=8,  s=4
-64K  + 512 -> k=9,  s=4
-128K + 1K  -> k=10, s=4
-1M   + 4K  -> k=12, s=5
+8K   + 64  -> k=6,  s=7
+16K  + 128 -> k=7,  s=7
+32K  + 256 -> k=8,  s=7
+64K  + 512 -> k=9,  s=7
+128K + 1K  -> k=10, s=7
+1M   + 4K  -> k=12, s=8
 */
 
-# define k 6 // number of bits for hashing branches
-# define s 4 // 4096=2^12.  12 bits for history
+# define k 12 // number of bits for hashing branches
+# define s 8 // 4096=2^12.  12 bits for history
 
 
 /*
@@ -28,10 +28,9 @@ Stores global history table
 
 Maximum size
 k=12 -> 4096 = 2^12
-s=8  -> 256  = 2^12
+s=8  -> 256  = 2^8
  */
-//int pattern_table[4096][256];
-int pattern_table[64][16];
+unsigned int pattern_table[4096][256];
 
 /*
 Histories for each branch
@@ -39,8 +38,8 @@ Histories for each branch
 Maximum size
 k=12 -> 4096 = 2^12
 */
-//int histories[4096];
-int histories[64];
+unsigned int histories[4096];
+//int histories[64];
 
 // Helper functions
 void step(int i, int j, bool outcome){
