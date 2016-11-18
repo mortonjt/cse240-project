@@ -1,4 +1,6 @@
+// #include "predictor.h"
 #include <math.h>
+#include <stdio.h>
 
 # define ST 0
 # define WT 1
@@ -60,19 +62,19 @@ void step(int i, int j, bool outcome){
     pattern_table[i][j] = WT;
   }
   // Weakly taken
-  if(pattern_table[i][j] == WT and outcome == true){
+  else if(pattern_table[i][j] == WT and outcome == true){
     pattern_table[i][j] = ST;
   } else if(pattern_table[i][j] == WT and outcome == false){
     pattern_table[i][j] = WNT;
   }
   // Weakly not taken
-  if(pattern_table[i][j] == WNT and outcome == true){
+  else if(pattern_table[i][j] == WNT and outcome == true){
     pattern_table[i][j] = WT;
   } else if(pattern_table[i][j] == WNT and outcome == false){
     pattern_table[i][j] = SNT;
   }
   // Strongly not taken
-  if(pattern_table[i][j] == SNT and outcome == true){
+  else if(pattern_table[i][j] == SNT and outcome == true){
     pattern_table[i][j] = WNT;
   } else if(pattern_table[i][j] == SNT and outcome == false){
     pattern_table[i][j] = SNT;

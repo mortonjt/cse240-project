@@ -24,24 +24,22 @@ bool test_step()
   init_predictor ();
   step(0, 0, false);
 
-  printf ("test1: pattern_table[0][0]= %d\n", pattern_table[0][0]);
   if(pattern_table[0][0] != WT)
     return false;
 
-  printf ("test1: histories[0]=%d\n", histories[0]);
 
   if(histories[0] != 0)
     return false;
 
   init_predictor ();
   step(0, 0, true);
+
   if(pattern_table[0][0] != ST)
     return false;
-
   if(histories[0] != 1)
     return false;
 
-  return 0;
+  return true;
 }
 
 bool test_make_prediction()
