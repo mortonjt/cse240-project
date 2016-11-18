@@ -32,8 +32,8 @@ Budget sizes
 1M   + 4K  -> k=12, s=8
 */
 
-# define k 12 // number of bits for hashing branches
-# define s 8 // 4096=2^12.  12 bits for history
+//# define k 12 // number of bits for hashing branches
+//# define s 8 // 4096=2^12.  12 bits for history
 
 
 /*
@@ -43,7 +43,7 @@ Maximum size
 k=12 -> 4096 = 2^12
 s=8  -> 256  = 2^12
  */
-extern int pattern_table[4096][256];
+//extern int pattern_table[4096][256];
 
 /*
 Histories for each branch
@@ -51,7 +51,7 @@ Histories for each branch
 Maximum size
 k=12 -> 4096 = 2^12
 */
-extern int histories[4096];
+//extern int histories[4096];
 
 // helper function that updates the global table;
 void step(int i, int j, bool outcome);

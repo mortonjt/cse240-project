@@ -6,9 +6,6 @@
 bool test_init_predictor()
 {
   int t = 10;
-  int p = pow(2, t);
-  if(p != 1024)
-    return false;
 
   pattern_table[0][0] = 1;
   init_predictor ();
@@ -42,16 +39,9 @@ bool test_step()
   return true;
 }
 
-bool test_make_prediction()
-{
-
-  return 0;
-}
-
-bool test_train_predictor()
-{
-  return 0;
-}
+// TODO: Add in a test where
+// the history_idx is larger than
+// the table size
 
 int main (int argc, char * argv[])
 {
