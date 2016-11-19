@@ -4,9 +4,10 @@ OPTS=-g
 all: main.o traceread.o predictor.o
 	$(CC) $(OPTS) -lm -o predictor.out main.o traceread.o predictor.o
 
-local_predictor: main.o traceread.o local_predictor.o
-	$(CC) $(OPTS) -lm -o local_predictor.out main.o traceread.o local_predictor.o
-
+gshare_predictor: main.o traceread.o gshare_predictor.o
+	$(CC) $(OPTS) -lm -o gshare_predictor.out main.o traceread.o gshare_predictor.o
+percep_predictor: main.o traceread.o percep_predictor.o
+	$(CC) $(OPTS) -lm -o percep_predictor.out main.o traceread.o percep_predictor.o
 main.o: main.C traceread.h predictor.h
 	$(CC) $(OPTS) -c main.C
 
