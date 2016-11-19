@@ -11,17 +11,17 @@
 /*
 Budget sizes
 
-8K   + 64  -> k=6,  s=5,  t=8
-16K  + 128 -> k=7,  s=5,  t=9
-32K  + 256 -> k=8,  s=5,  t=10
-64K  + 512 -> k=9,  s=5,  t=11
-128K + 1K  -> k=10, s=5,  t=12
-1M   + 4K  -> k=12, s=6,  t=14
+8K   + 64  -> k=6,  s=6,  t=11
+16K  + 128 -> k=7,  s=6,  t=12
+32K  + 256 -> k=8,  s=6,  t=13
+64K  + 512 -> k=9,  s=6,  t=14
+128K + 1K  -> k=10, s=6,  t=15
+1M   + 4K  -> k=12, s=7,  t=18
 */
 
-# define k 6   // bits for hashing local branches
-# define s 5   // bits for history
-# define t 8   // bits for global/choice history
+# define k 12   // bits for hashing local branches
+# define s 6    // bits for history
+# define t 18   // bits for global/choice history
 
 /*
 Stores local history table
@@ -37,25 +37,25 @@ unsigned int local_pattern_table[4096][256];
 Histories for each branch
 
 Maximum size
-k=12 -> 4096 = 2^12
+t=18 -> 2^12
 */
-unsigned int local_histories[16384];
+unsigned int local_histories[4096];
 
 /*
 2-bit saturating counters for global history
 
 Maximum size
-k=12 -> 4096 = 2^12
+t=18 -> 2^18
 */
-unsigned int global_pattern_table[16384];
+unsigned int global_pattern_table[262144];
 
 /*
 2-bit saturating counters for choice pattern_table
 
 Maximum size
-k=12 -> 4096 = 2^12
+t=18 -> 2^18
 */
-unsigned int choice_pattern_table[4096];
+unsigned int choice_pattern_table[262144];
 
 
 // Helper functions
@@ -127,7 +127,6 @@ void global_step(int i, bool outcome){
   } else if(global_pattern_table[i] == SNT and outcome == false){
     global_pattern_table[i] = SNT;
   }
-
 }
 
 
