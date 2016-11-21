@@ -113,28 +113,38 @@ void global_step(int i, bool outcome){
     i : the hash of the pattern corresponding to the last t occurences
    */
   // Strongly taken
-  if(global_pattern_table[i] == ST and outcome == true){
-    global_pattern_table[i] = ST;
-  } else if(global_pattern_table[i] == ST and outcome == false){
-    global_pattern_table[i] = WT;
-  }
-  // Weakly taken
-  else if(global_pattern_table[i] == WT and outcome == true){
-    global_pattern_table[i] = ST;
-  } else if(global_pattern_table[i] == WT and outcome == false){
-    global_pattern_table[i] = WNT;
-  }
-  // Weakly not taken
-  else if(global_pattern_table[i] == WNT and outcome == true){
-    global_pattern_table[i] = WT;
-  } else if(global_pattern_table[i] == WNT and outcome == false){
-    global_pattern_table[i] = SNT;
-  }
-  // Strongly not taken
-  else if(global_pattern_table[i] == SNT and outcome == true){
-    global_pattern_table[i] = WNT;
-  } else if(global_pattern_table[i] == SNT and outcome == false){
-    global_pattern_table[i] = SNT;
+  // if(global_pattern_table[i] == ST and outcome == true){
+  //   global_pattern_table[i] = ST;
+  // } else if(global_pattern_table[i] == ST and outcome == false){
+  //   global_pattern_table[i] = WT;
+  // }
+  // // Weakly taken
+  // else if(global_pattern_table[i] == WT and outcome == true){
+  //   global_pattern_table[i] = ST;
+  // } else if(global_pattern_table[i] == WT and outcome == false){
+  //   global_pattern_table[i] = WNT;
+  // }
+  // // Weakly not taken
+  // else if(global_pattern_table[i] == WNT and outcome == true){
+  //   global_pattern_table[i] = WT;
+  // } else if(global_pattern_table[i] == WNT and outcome == false){
+  //   global_pattern_table[i] = SNT;
+  // }
+  // // Strongly not taken
+  // else if(global_pattern_table[i] == SNT and outcome == true){
+  //   global_pattern_table[i] = WNT;
+  // } else if(global_pattern_table[i] == SNT and outcome == false){
+  //   global_pattern_table[i] = SNT;
+  // }
+
+  if (global_pattern_table[i] < 2 and (outcome == false)){
+    global_pattern_table[i] = MIN(3, global_pattern_table[i]+1);
+  } else if (global_pattern_table[i] < 2 and (outcome == true)){
+    global_pattern_table[i] = MAX(3, global_pattern_table[i]-1);
+  } else if (global_pattern_table[i] > 2 and (outcome != false)){
+    global_pattern_table[i] = MAX(0, global_pattern_table[i]+1);
+  } else if (global_pattern_table[i] > 2 and (outcome == true)){
+    global_pattern_table[i] = MIN(3, global_pattern_table[i]-1);
   }
 }
 
@@ -151,40 +161,51 @@ void choice_step(int i,
     i : the hash of the pattern corresponding to the last t occurences
    */
 
-  // Strongly taken (local)
-  if(choice_pattern_table[i] == ST and
-     ((local_outcome == true and outcome == false) or
-      (local_outcome == false and outcome == true))){
-    choice_pattern_table[i] = WT;
+  // // Strongly taken (local)
+  // if(choice_pattern_table[i] == ST and
+  //    ((local_outcome == true and outcome == false) or
+  //     (local_outcome == false and outcome == true))){
+  //   choice_pattern_table[i] = WT;
+  // }
+  // // Weakly taken (local)
+  // else if(choice_pattern_table[i] == WT and
+  // 	  ((local_outcome == false and outcome == true) or
+  // 	   (local_outcome == true and outcome == false))){
+  //   choice_pattern_table[i] = WNT;
+  // }
+  // else if(choice_pattern_table[i] == WT and
+  // 	  ((local_outcome == true and outcome == true) or
+  // 	   (local_outcome == false and outcome == false))){
+  //   choice_pattern_table[i] = ST;
+  // }
+  // // Weakly not taken (global)
+  // else if(choice_pattern_table[i] == WNT and
+  // 	  ((global_outcome == false and outcome == true) or
+  // 	   (global_outcome == true and outcome == false))){
+  //   choice_pattern_table[i] = WT;
+  // }
+  // else if(choice_pattern_table[i] == WNT and
+  // 	  ((global_outcome == false and outcome == false) or
+  // 	   (global_outcome == true and outcome == true))){
+  //   choice_pattern_table[i] = SNT;
+  // }
+  // // Strongly not taken (global)
+  // else if(choice_pattern_table[i] == SNT and
+  // 	  ((global_outcome == true and outcome == false) or
+  // 	   (global_outcome == false and outcome == true))){
+  //   choice_pattern_table[i] = WNT;
+  // }
+
+  if (choice_pattern_table[i] < 2 and (outcome!=local_outcome)){
+    choice_pattern_table[i] = MIN(3, choice_pattern_table[i]+1);
+  } else if (choice_pattern_table[i] < 2 and (outcome==local_outcome)){
+    choice_pattern_table[i] = MAX(3, choice_pattern_table[i]-1);
+  } else if (choice_pattern_table[i] > 2 and (outcome!=global_outcome)){
+    choice_pattern_table[i] = MIN(0, choice_pattern_table[i]-1);
+  } else if (choice_pattern_table[i] > 2 and (outcome==global_outcome)){
+    choice_pattern_table[i] = MAX(0, choice_pattern_table[i]+1);
   }
-  // Weakly taken (local)
-  else if(choice_pattern_table[i] == WT and
-	  ((local_outcome == false and outcome == true) or
-	   (local_outcome == true and outcome == false))){
-    choice_pattern_table[i] = WNT;
-  }
-  else if(choice_pattern_table[i] == WT and
-	  ((local_outcome == true and outcome == true) or
-	   (local_outcome == false and outcome == false))){
-    choice_pattern_table[i] = ST;
-  }
-  // Weakly not taken (global)
-  else if(choice_pattern_table[i] == WNT and
-	  ((global_outcome == false and outcome == true) or
-	   (global_outcome == true and outcome == false))){
-    choice_pattern_table[i] = WT;
-  }
-  else if(choice_pattern_table[i] == WNT and
-	  ((global_outcome == false and outcome == false) or
-	   (global_outcome == true and outcome == true))){
-    choice_pattern_table[i] = SNT;
-  }
-  // Strongly not taken (global)
-  else if(choice_pattern_table[i] == SNT and
-	  ((global_outcome == true and outcome == false) or
-	   (global_outcome == false and outcome == true))){
-    choice_pattern_table[i] = WNT;
-  }
+
 }
 
 
