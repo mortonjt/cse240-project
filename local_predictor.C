@@ -21,7 +21,7 @@ Budget sizes
 1M   + 4K  -> k=12, s=8
 */
 
-# define k 5 // number of bits for hashing branches
+# define k 10 // number of bits for hashing branches
 # define s 19 // 4096=2^12.  12 bits for history
 
 
@@ -34,7 +34,6 @@ s=8  -> 256  = 2^8
  */
 unsigned int pattern_table[1048576];
 
-
 /*
 Histories for each branch
 
@@ -42,25 +41,32 @@ Maximum size
 k=12 -> 4096 = 2^12
 */
 unsigned int histories[1048576];
-unsigned int history;
+
 
 void init_predictor ()
 {
+  printf("init");
   // initialize all 2bit saturating counts to Strongly Taken
   for (int i = 0; i<pow(2, k); i++){
     // initialize all histories to zero.
-    histories[i] = 0;
+    histories[i] = 1;
   }
   for (int j = 0; j<pow(2, s); j++){
-    pattern_table[j] = 0;
+    pattern_table[j] = 3;
   }
 }
 
 
 bool make_prediction (unsigned int pc)
 {
-  int branch = (pc % k);  // branch hash
-  int i = histories[branch];
+  //printf("predict\n");
+  unsigned int km = pow(2, k);
+  unsigned int sm = pow(2, s);
+  //int km = 2;
+  unsigned int branch = (pc % km);  // branch hash
+  //printf ("branch %d\n", branch);
+  unsigned int i = histories[branch] % sm;
+  //printf ("histories %d\n", i);
   if(pattern_table[i] < 2)
     return true;
   else
@@ -70,21 +76,25 @@ bool make_prediction (unsigned int pc)
 
 void train_predictor (unsigned int pc, bool outcome)
 {
-
-  int branch = (pc % k);  // branch hash
-  unsigned int i = histories[branch];
+  //printf("train\n");
+  //int km = 2;
+  //int sm = 2;
+  unsigned int km = pow(2, k);
+  unsigned int sm = pow(2, s);
+  unsigned int branch = (pc % km);  // branch hash
+  unsigned int i = histories[branch] % sm;
   unsigned int state = pattern_table[i];
   if (state < 2 and outcome){
     pattern_table[i] = ST;
-  }else if (state >= 2 and not outcome){
+  } else if (state >= 2 and not outcome){
     pattern_table[i] = SNT;
-  }else if (state >= 2 and outcome){
+  } else if (state >= 2 and outcome){
     pattern_table[i] = MAX(0, state-1);
-  }else if (state < 2 and not outcome){
+  } else if (state < 2 and not outcome){
     pattern_table[i] = MIN(3, state+1);
   } else{
-    printf("warning");
+    printf("warning\n");
   }
 
-  histories[i] =  ((histories[i] << 1) | outcome) % s;
+  histories[i] =  ((histories[i] << 1) | outcome) % sm;
 }
