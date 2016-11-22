@@ -15,15 +15,15 @@ Budget sizes
 
 8K   + 64  -> k=9,  s=7,  t=10
 16K  + 128 -> k=10, s=7,  t=11
-32K  + 256 -> k=,  s=,  t=
-64K  + 512 -> k=,  s=,  t=
-128K + 1K  -> k=, s=,  t=
-1M   + 4K  -> k=12, s=9,  t=14
+32K  + 256 -> k=10,  s=11,  t=12
+64K  + 512 -> k=11,  s=12,  t=13
+128K + 1K  -> k=11, s=12,  t=14
+1M   + 4K  -> k=15, s=14,  t=17
 */
 
-# define k 12   // bits for hashing local branches
-# define s 9    // bits for history
-# define t 14   // bits for global/choice history
+# define k 10    // bits for hashing local branches
+# define s 7    // bits for history
+# define t 11    // bits for global/choice history
 
 /*
 Stores local history table
