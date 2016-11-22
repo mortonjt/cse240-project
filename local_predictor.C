@@ -1,4 +1,3 @@
-// #include "predictor.h"
 #include <math.h>
 #include <stdio.h>
 
