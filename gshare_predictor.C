@@ -46,7 +46,7 @@ void train_predictor (unsigned int pc, bool outcome)
     }
     if (current_ps == 2)
     {
-      next_ps = 4;
+      next_ps = 3;
     }
   }
   else
