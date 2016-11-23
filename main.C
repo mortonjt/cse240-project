@@ -49,7 +49,7 @@ int main (int argc, char * argv[])
     pc = ntohl (pc);
 
     num_branches ++;
-    
+
     // Make a prediction and compare with actual outcome
     if (make_prediction (pc) != outcome)
       mis_preds ++;
@@ -66,6 +66,6 @@ int main (int argc, char * argv[])
 
   if (argc == 2)
     close_trace ();
-  
+
   return 0;
 }
