@@ -14,9 +14,6 @@
   concerned about the memory used by the simulated branch predictor.
 */
 
-
-
-
 /*
   Initialize the predictor.
 */
@@ -35,5 +32,6 @@ bool make_prediction (unsigned int pc);
   indicates that the branch was not taken).
 */
 void train_predictor (unsigned int pc, bool outcome);
+
 
 #endif
