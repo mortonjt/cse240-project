@@ -145,16 +145,6 @@ void choice_step(int i,
 	   state, outcome, local_outcome, global_outcome);
   }
 
-
-  // if (choice_pattern_table[i] < 2 and (outcome!=local_outcome)){
-  //   choice_pattern_table[i] = MIN(3, choice_pattern_table[i]+1);
-  // } else if (choice_pattern_table[i] < 2 and (outcome==local_outcome)){
-  //   choice_pattern_table[i] = MAX(3, choice_pattern_table[i]-1);
-  // } else if (choice_pattern_table[i] > 2 and (outcome!=global_outcome)){
-  //   choice_pattern_table[i] = MIN(0, choice_pattern_table[i]-1);
-  // } else if (choice_pattern_table[i] > 2 and (outcome==global_outcome)){
-  //   choice_pattern_table[i] = MAX(0, choice_pattern_table[i]+1);
-  // }
 }
 
 
@@ -218,7 +208,7 @@ void train_predictor (unsigned int pc, bool outcome)
   int local_taken  = local_pattern_table[history_idx];
   int global_taken = global_pattern_table[path_idx];
   int choice_taken = choice_pattern_table[path_idx];
-  //printf ("branch:%d, path_idx:%d, history:%d, outcome:%d\n", branch,  path_idx, history_idx, outcome);
+
   choice_step(path_idx, global_taken, local_taken, outcome);
   global_step(path_idx, outcome);
   local_step(history_idx, outcome);
